@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="style.css">
+<title>CloudSync — Cloud File Sharing</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--dark:#0b0f1a;--blue:#2563eb;--blue2:#3b82f6;--light:#60a5fa;--text:#f1f5f9;--muted:#94a3b8;--border:#1e2d4a;--card:#111827}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(37,99,235,.18),transparent),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(59,130,246,.08),transparent)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(11,15,26,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(37,99,235,.15)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text);text-decoration:none}
+.nav-logo img{
+    height:40px;
+    width:auto;
+}
+.nav-logo span{color:var(--light)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn-nav{background:var(--blue);color:#fff!important;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:600;transition:all .2s}
+.btn-nav:hover{background:var(--blue2)!important}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 60px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.3);border-radius:30px;padding:6px 18px;font-size:.78rem;color:var(--light);margin-bottom:28px;animation:up .6s ease both}
+.hero-logo{width:90px;height:90px;object-fit:contain;margin-bottom:24px;filter:drop-shadow(0 0 30px rgba(37,99,235,.5));animation:up .6s .1s ease both}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(2.6rem,6vw,4.8rem);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;animation:up .6s .2s ease both}
+.hero h1 span{background:linear-gradient(135deg,var(--blue2),var(--light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:540px;line-height:1.7;margin-bottom:36px;animation:up .6s .3s ease both}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:up .6s .4s ease both}
+.btn-p{background:var(--blue);color:#fff;padding:13px 32px;border-radius:10px;font-size:.95rem;font-weight:600;text-decoration:none;font-family:'Outfit',sans-serif;transition:all .2s;box-shadow:0 4px 24px rgba(37,99,235,.3)}
+.btn-p:hover{background:var(--blue2);transform:translateY(-2px)}
+.btn-s{background:transparent;color:var(--text);padding:13px 32px;border-radius:10px;font-size:.95rem;font-weight:600;text-decoration:none;border:1px solid var(--border);font-family:'Outfit',sans-serif;transition:all .2s}
+.btn-s:hover{border-color:var(--blue);color:var(--light)}
+.stats{display:flex;justify-content:center;gap:50px;margin-top:70px;padding:36px 0;border-top:1px solid var(--border);flex-wrap:wrap;animation:up .6s .5s ease both}
+.stat-v{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--blue2),var(--light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:.8rem;color:var(--muted);margin-top:4px}
+.sec{position:relative;z-index:1;padding:90px 60px;max-width:1100px;margin:0 auto}
+.tag{font-size:.72rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+.sec-title{font-family:'Outfit',sans-serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:14px;letter-spacing:-.5px}
+.sec-sub{color:var(--muted);font-size:.95rem;max-width:480px;line-height:1.7;margin-bottom:50px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;transition:all .3s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--light));opacity:0;transition:opacity .3s}
+.card:hover{border-color:rgba(37,99,235,.4);transform:translateY(-4px)}
+.card:hover::before{opacity:1}
+.card-icon{width:46px;height:46px;background:rgba(37,99,235,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px}
+.card-title{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;margin-bottom:7px}
+.card-desc{font-size:.86rem;color:var(--muted);line-height:1.6}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;text-align:center}
+.step-n{width:42px;height:42px;background:linear-gradient(135deg,var(--blue),var(--light));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;margin:0 auto 14px}
+.step-t{font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:7px}
+.step-d{font-size:.84rem;color:var(--muted);line-height:1.6}
+.cta{position:relative;z-index:1;text-align:center;padding:90px 20px;background:linear-gradient(180deg,transparent,rgba(37,99,235,.06),transparent)}
+.cta h2{font-family:'Outfit',sans-serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:14px}
+.cta p{color:var(--muted);margin-bottom:34px}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:26px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer p{font-size:.8rem;color:var(--muted)}
+.f-logo{display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;color:var(--text)}
+.f-logo img{width:22px;height:22px;object-fit:contain}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){nav{padding:14px 20px}.nav-links{display:none}.sec{padding:60px 20px}footer{padding:20px}.stats{gap:24px}}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav>
+<a href="index.html" class="nav-logo">
+   <img src="assets/CloudSync_logo.png" alt="" style="height:40px;">
+    Cloud<span>Sync</span>
+</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="login.html" class="btn-nav">Get Started →</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="badge">☁️ Powered by Amazon Web Services</div>
+  <img src="assets/CloudSync_logo.png" alt="CloudSync" style="height:120px;">
+  <h1>Store. Share. <span>Sync.</span><br/>Your Files, Anywhere.</h1>
+  <p>CloudSync is a secure, serverless cloud file sharing platform. Upload files, generate instant share links, and access everything from any device.</p>
+  <div class="btns">
+    <a href="login.html" class="btn-p">Get Started Free</a>
+    <a href="#features" class="btn-s">Learn More</a>
+  </div>
+  <div class="stats">
+    <div><div class="stat-v">100%</div><div class="stat-l">Free on AWS</div></div>
+    <div><div class="stat-v">5 GB</div><div class="stat-l">Free Storage</div></div>
+    <div><div class="stat-v">99.9%</div><div class="stat-l">S3 Uptime</div></div>
+    <div><div class="stat-v">0ms</div><div class="stat-l">Server Setup</div></div>
+  </div>
+</section>
+<section class="sec" id="features">
+  <div class="tag">Features</div>
+  <div class="sec-title">Everything you need to share files</div>
+  <p class="sec-sub">Built on AWS serverless — no servers to manage, no maintenance required.</p>
+  <div class="grid">
+    <div class="card"><div class="card-icon">⬆️</div><div class="card-title">Instant Upload</div><div class="card-desc">Upload any file directly to AWS S3 using secure pre-signed URLs.</div></div>
+    <div class="card"><div class="card-icon">🔗</div><div class="card-title">Share Links</div><div class="card-desc">Generate shareable links instantly. Anyone can download — no account needed.</div></div>
+    <div class="card"><div class="card-icon">⬇️</div><div class="card-title">Easy Download</div><div class="card-desc">Download your files anytime from any device with a single click.</div></div>
+    <div class="card"><div class="card-icon">🔒</div><div class="card-title">Secure Storage</div><div class="card-desc">Files stored privately in AWS S3. Only you can access your files.</div></div>
+    <div class="card"><div class="card-icon">👤</div><div class="card-title">User Accounts</div><div class="card-desc">Sign up with email and password. Your files are linked to your account only.</div></div>
+    <div class="card"><div class="card-icon">🗑️</div><div class="card-title">Easy Delete</div><div class="card-desc">Remove files you no longer need. Instantly deleted from the cloud.</div></div>
+  </div>
+</section>
+<section class="sec" id="how">
+  <div class="tag">How it works</div>
+  <div class="sec-title">Up and running in seconds</div>
+  <p class="sec-sub">No setup, no installations. Just sign up and start sharing.</p>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-t">Create Account</div><div class="step-d">Sign up with email and password. Verify and you're in.</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">Upload Files</div><div class="step-d">Click to upload. Files stored securely in your AWS S3 bucket.</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">Share & Access</div><div class="step-d">Generate a share link. Anyone can download without an account.</div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-t">Manage Files</div><div class="step-d">View all files in your dashboard. Download or delete anytime.</div></div>
+  </div>
+</section>
+<section class="cta">
+  <h2>Ready to sync your files?</h2>
+  <p>Join CloudSync today — completely free on AWS.</p>
+  <a href="login.html" class="btn-p">Get Started Free</a>
+</section>
+<footer>
+  <div class="f-logo"><img src="assets/CloudSync_logo.png" alt=""style="height:30px;"/>CloudSync</div>
+  <p>Built on AWS — S3 · Lambda · API Gateway · Cognito · DynamoDB</p>
+  <p>© 2026 CloudSync.</p>
+</footer>
+<script src="cloudsync-bot.js"></script>
+</body>
+</html>
