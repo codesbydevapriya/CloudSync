@@ -1,0 +1,37 @@
+.nav-logo{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-logo img{
+    width: 100px;
+    height: auto;
+}
+html {
+  scroll-behavior: smooth;
+}
+nav a {
+  position: relative;
+  text-decoration: none;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background: var(--blue2);
+  transition: width 0.3s ease;
+}
+nav a {
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--light);
+}
