@@ -152,8 +152,8 @@ Final Year BCA Project — Izee Business School, 2026
 
 | Name | GitHub |
 |---|---|
-| Abhijith AS | [@abhijithas](https://github.com/abhijithas) |
-| Sreyas VM | [@sreyasvm](https://github.com/sreyasvm) |
+| Abhijith AS | [@abhijithas20](https://github.com/abhijithas20) |
+| Sreyas VM | [@codebysreyas](https://github.com/codebysreyas) |
 | Devapriya KK | [@codesbydevapriya](https://github.com/codesbydevapriya) |
 
 ---
