@@ -5,7 +5,7 @@
 
 (function () {
 
-  const OPENROUTER_API_KEY = "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";
+  const OPENROUTER_API_KEY = "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";
   const MODEL = "openrouter/free";
 
   const css = `
@@ -219,22 +219,15 @@ Your personality as Neeli:
     qrRow.appendChild(btn);
   });
 
-fab.addEventListener("click", () => {
-  const sound = new Audio("assests/neeli_sound.mp3"); // 👈 change to your file name
-  sound.volume = 0.5;
-  sound.play().catch(() => {}); // catch handles autoplay browser restrictions
-  
-  isOpen = !isOpen;
-  fab.classList.toggle("cs-open", isOpen);
-  win.classList.toggle("cs-visible", isOpen);
-  if (isOpen && msgs.children.length === 0) {
-    if (OPENROUTER_API_KEY.includes("REPLACE_WITH_YOUR_KEY")) {
-      errBanner.style.display = "block";
+  fab.addEventListener("click", () => {
+    isOpen = !isOpen;
+    fab.classList.toggle("cs-open", isOpen);
+    win.classList.toggle("cs-visible", isOpen);
+    if (isOpen && msgs.children.length === 0) {
+      addBotMsg("Hi there! I'm **Neeli**, your CloudSync assistant 💙\n\nI can help you upload or share files, troubleshoot issues, or guide you through the app. What would you like to know?");
     }
-    addBotMsg("Hi there! I'm **Neeli**, your CloudSync assistant 💙\n\nI can help you upload or share files, troubleshoot issues, or guide you through the app. What would you like to know?");
-  }
-  if (isOpen) setTimeout(() => input.focus(), 320);
-});
+    if (isOpen) setTimeout(() => input.focus(), 320);
+  });
 
   function esc(t) { return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
   function fmt(t) { return esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\n/g,"<br>"); }
