@@ -40,3 +40,142 @@ CloudSync is a full-stack serverless web application that allows users to secure
 ---
 
 ## Architecture
+
+```
+Browser  -->  S3 Static Website (Frontend)
+                      |
+                      v
+             Amazon Cognito (Auth)
+                      |
+                      v
+             API Gateway (REST API)
+                      |
+          ____________|____________
+         |            |            |
+         v            v            v
+    Lambda         Lambda       Lambda
+    (Upload)      (Download)   (Delete/List)
+         |            |            |
+         v            v            v
+       AWS S3      DynamoDB      AWS S3
+      (Files)     (Metadata)    (Files)
+```
+
+---
+
+## Tech Stack
+
+**Frontend**
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+
+**Backend — AWS Serverless**
+
+![AWS Lambda](https://img.shields.io/badge/AWS_Lambda-FF9900?style=flat-square&logo=awslambda&logoColor=white)
+![API Gateway](https://img.shields.io/badge/API_Gateway-FF4F8B?style=flat-square&logo=amazonaws&logoColor=white)
+![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=flat-square&logo=amazondynamodb&logoColor=white)
+![S3](https://img.shields.io/badge/Amazon_S3-569A31?style=flat-square&logo=amazons3&logoColor=white)
+![Cognito](https://img.shields.io/badge/AWS_Cognito-DD344C?style=flat-square&logo=amazonaws&logoColor=white)
+![CloudFront](https://img.shields.io/badge/CloudFront-232F3E?style=flat-square&logo=amazonaws&logoColor=white)
+
+**AI**
+
+![OpenRouter](https://img.shields.io/badge/OpenRouter-AI_Chatbot-6366f1?style=flat-square)
+
+---
+
+## AWS Services
+
+| Service | Purpose |
+|---|---|
+| S3 (cloudsync-private) | Stores all uploaded files privately |
+| S3 (cloudsync-public) | Hosts the frontend static website |
+| DynamoDB (cloudsync) | Stores file metadata — name, size, email, upload date |
+| Lambda (4 functions) | Serverless backend — upload, download, delete, list |
+| API Gateway | REST API routing to Lambda functions |
+| Cognito | User authentication, email verification, password reset |
+| CloudFront | CDN for fast and secure global content delivery |
+
+---
+
+## Project Structure
+
+```
+CloudSync/
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── style.css
+│   ├── cloudsync-bot.js
+│   └── assets/
+│       └── CloudSync_logo.png
+│
+└── lambda/
+    ├── cloudsync-upload/
+    ├── cloudsync-download/
+    ├── cloudsync-delete/
+    └── cloudsync-list/
+```
+
+---
+
+## How It Works
+
+1. User signs up and receives an email verification code from Cognito  
+2. On login, Cognito returns a JWT token stored in session storage  
+3. User uploads a file — Lambda generates a pre-signed S3 URL and uploads directly to S3  
+4. File metadata is stored in DynamoDB  
+5. File sharing is enabled via pre-signed GET URLs  
+6. On delete — file is removed from S3 and DynamoDB  
+7. Files persist across sessions and reload on login  
+
+---
+
+## AI Assistant — Neeli
+
+CloudSync includes Neeli, a built-in AI assistant powered by OpenRouter (free tier). Neeli is available on all pages as a floating chat widget and can help users upload files, troubleshoot issues, and navigate the application.
+
+Neeli is powered by OpenRouter (free tier) and may have limited availability depending on API usage.
+
+---
+
+## Live Demo
+
+http://cloudsync-public.s3-website.ap-south-1.amazonaws.com/
+
+---
+
+## ⚠️ Service Availability Note
+
+This project relies on third-party services including AWS (Free Tier) and OpenRouter (AI API).
+
+Due to usage limits or quota restrictions, certain features such as file operations or the AI assistant may occasionally be unavailable.
+
+The system is designed to function reliably in a production environment with appropriate resource allocation and API provisioning.
+
+---
+
+## Team
+
+Final Year BCA Project — Izee Business School, 2026
+
+| Name | GitHub |
+|---|---|
+| Abhijith AS | https://github.com/abhijithas20 |
+| Sreyas VM | https://github.com/codebysreyas |
+| Devapriya KK | https://github.com/codesbydevapriya |
+
+---
+
+## License
+
+This project is open source and available under the MIT License.
+
+---
+
+<div align="center">
+Built on AWS · © 2026 CloudSync · If you found this useful, consider starring the repo
+</div>
